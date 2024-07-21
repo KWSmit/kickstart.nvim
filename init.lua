@@ -91,18 +91,16 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
--- Make line numbers default
+-- Make line numbers default and use relative numbers
 vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -861,6 +859,47 @@ require('lazy').setup({
       --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
       --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+    end,
+  },
+  -- Below are plugins added by myself
+  { -- Toggleterm plugin to toggle terminals during session
+    'akinsho/toggleterm.nvim',
+    config = function()
+      local toggleterm = require 'toggleterm'
+      toggleterm.setup {
+        size = 20,
+        open_mapping = [[<c-\>]], -- Open ToggleTerm with <Ctrl-\>
+        hide_numbers = true,
+        shade_filetypes = {},
+        shade_terminals = true,
+        shading_factor = 2,
+        start_in_insert = true,
+        insert_mappings = true,
+        persist_size = true,
+        direction = 'float',
+        close_on_exit = true,
+        shell = vim.o.shell,
+        float_opts = {
+          border = 'curved',
+          winblend = 0,
+          highlights = {
+            border = 'Normal',
+            background = 'Normal',
+          },
+        },
+      }
+    end,
+  },
+  { -- Vim wiki
+    'vimwiki/vimwiki',
+    init = function()
+      vim.g.vimwiki_list = {
+        { path = '/mnt/Stack/Documenten/vimwiki/applications', syntax = 'markdown', ext = '.md' },
+        { path = '/mnt/Stack/Documenten/vimwiki/linux', syntax = 'markdown', ext = '.md' },
+        { path = '/mnt/Stack/Documenten/vimwiki/mindstorms', syntax = 'markdown', ext = '.md' },
+        { path = '/mnt/Stack/Documenten/vimwiki/software_development', syntax = 'markdown', ext = '.md' },
+        { path = '/mnt/Stack/Documenten/vimwiki/system_administration', syntax = 'markdown', ext = '.md' },
+      }
     end,
   },
 
